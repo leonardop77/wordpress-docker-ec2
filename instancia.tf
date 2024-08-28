@@ -12,10 +12,15 @@ resource "aws_instance" "wordpress" {
   }
 }
 
+# Elastic IP
+resource "aws_eip" "eip-proyecto" {
+  domain = "vpc"
+}
+
 #Asociación IP elastica a EC2
 resource "aws_eip_association" "eip_association" {
   instance_id   = aws_instance.wordpress.id
-  allocation_id = "eipalloc-0125da63202213813"
+  allocation_id = aws_eip.eip-proyecto.id 
 }
 
 #Creación grupo de subredes para RDS
